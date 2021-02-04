@@ -1,17 +1,17 @@
 
 const int dry = 270; 
 
-const int pumpPin1 = 12;
-const int pumpPin2 = ;
-const int pumpPin3 = ; 
-const int pumpPin4 = ;
+const int pumpPin1 = 5;
+const int pumpPin2 = 4;
+const int pumpPin3 = 3; 
+const int pumpPin4 = 2;
 
-const int tempAndHumiditySensor = ;
+const int tempAndHumiditySensor = 7;
 
-const int soilSensor1 = A4;
-const int soilSensor2 = A4;
-const int soilSensor3 = A4;
-const int soilSensor4 = A4;
+const int soilSensor1 = A0;
+const int soilSensor2 = A1;
+const int soilSensor3 = A2;
+const int soilSensor4 = A3;
 
 
 #include <DHT.h>;
@@ -49,7 +49,7 @@ void setup() {
 
 void loop() {
 
-  delay(180000);//Vänta med att köra loopen..
+ 
 
   hum = dht.readHumidity();
   temp = dht.readTemperature();
@@ -60,7 +60,7 @@ void loop() {
     Serial.print(temp);
     Serial.println(" Celsius");  
 
-  // hämta värdet
+  // hämta värden
   int moisture1 = analogRead(soilSensor1);
   int moisture2 = analogRead(soilSensor2);
   int moisture3 = analogRead(soilSensor3);
@@ -74,6 +74,15 @@ void loop() {
   Serial.println(moisture4);
 
   delay(5000);
+
+//  if(temp > 28 || hum > 95)
+//  {
+//    //Kör fläkt
+//    Serial.println("Temperatur för hög. Startar fläkt. Nuvarande temperatur: " + String(temp));
+//    
+//    delay(60000);
+//    
+//  }
   
   if (moisture1 >= dry) {
     
@@ -87,9 +96,11 @@ void loop() {
     digitalWrite(pumpPin1, HIGH);
     Serial.println("Done watering.");
   } else {
-    Serial.println("Jorden är torr. Bevattning krävs ej " + String(moisture1));
+    Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture1));
   }
----------------------------------
+  
+/////////////////////////
+
   if (moisture2 >= dry) {
     // the soil is too dry, water!
     Serial.println("Startar bevattning..fuktigheten är: " + String(moisture2));
@@ -102,9 +113,11 @@ void loop() {
     digitalWrite(pumpPin2, HIGH);
     Serial.println("Done watering.");
   } else {
-    Serial.println("Jorden är torr. Bevattning krävs ej " + String(moisture2));
+    Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture2));
   }
-----------------------------------
+  
+/////////////////////////
+
   if (moisture3 >= dry) {
     // the soil is too dry, water!
     Serial.println("Startar bevattning..fuktigheten är: " + String(moisture3));
@@ -117,9 +130,11 @@ void loop() {
     digitalWrite(pumpPi3, HIGH);
     Serial.println("Done watering.");
   } else {
-    Serial.println("Jorden är torr. Bevattning krävs ej " + String(moisture3));
+    Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture3));
   }
------------------------------------
+  
+/////////////////////////
+
   if (moisture4 >= dry) {
     // the soil is too dry, water!
     Serial.println("Startar bevattning..fuktigheten är: " + String(moisture4));
@@ -132,6 +147,12 @@ void loop() {
     digitalWrite(pumpPin4, HIGH);
     Serial.println("Done watering.");
   } else {
-    Serial.println("Startar bevattning..fuktigheten är: " + String(moisture4));
+    Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture4));
   }
+
+  
+///////////////////////
+
+
+   delay(180000);//Vänta med att köra loopen..
 }
