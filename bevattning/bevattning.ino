@@ -14,7 +14,7 @@ const int soilSensor3 = A2;
 const int soilSensor4 = A3;
 
 
-#include <DHT.h>;
+#include <DHT.h>
 #define DHTPIN 7 //Kan ändras...
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
@@ -28,6 +28,7 @@ float temp;
 
 void setup() {
 
+  Serial.begin(9600);
   dht.begin();
   pinMode(pumpPin1, OUTPUT);
   pinMode(pumpPin2, OUTPUT);
@@ -41,7 +42,7 @@ void setup() {
   pinMode(soilSensor3, INPUT);
   pinMode(soilSensor4, INPUT);
   
-  Serial.begin(9600);
+  
   
   digitalWrite(pumpPin1, HIGH);
   digitalWrite(pumpPin2, HIGH);
@@ -98,7 +99,7 @@ void loop() {
 
     // avsluta bevattningen 
     digitalWrite(pumpPin1, HIGH);
-    Serial.println("Done watering.");
+    Serial.println("Bevattning klar.");
   } else {
     Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture1));
   }
@@ -115,7 +116,7 @@ void loop() {
 
     // avsluta bevattningen 
     digitalWrite(pumpPin2, HIGH);
-    Serial.println("Done watering.");
+    Serial.println("Bevattning klar.");
   } else {
     Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture2));
   }
@@ -131,8 +132,8 @@ void loop() {
     delay(5000);
 
     // avsluta bevattningen 
-    digitalWrite(pumpPi3, HIGH);
-    Serial.println("Done watering.");
+    digitalWrite(pumpPin3, HIGH);
+    Serial.println("Bevattning klar.");
   } else {
     Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture3));
   }
@@ -149,7 +150,7 @@ void loop() {
 
     // avsluta bevattningen 
     digitalWrite(pumpPin4, HIGH);
-    Serial.println("Done watering.");
+    Serial.println("Bevattning klar.");
   } else {
     Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture4));
   }
@@ -158,5 +159,5 @@ void loop() {
 ///////////////////////
 
 
-   delay(180000);//Vänta med att köra loopen..
+   delay(1000);//Vänta med att köra loopen..
 }
