@@ -23,6 +23,9 @@ int chk;
 float hum; 
 float temp; 
 
+
+
+
 void setup() {
 
   dht.begin();
@@ -50,15 +53,15 @@ void setup() {
 void loop() {
 
  
-
+  
   hum = dht.readHumidity();
   temp = dht.readTemperature();
   
-  Serial.print("Room humidity: ");
+  Serial.print("Luftfuktighet: ");
     Serial.print(hum);
-    Serial.print(" %, Temperature: ");
+    Serial.print(" %, Temperatur: ");
     Serial.print(temp);
-    Serial.println(" Celsius");  
+    Serial.println(" °C");  
 
   // hämta värden
   int moisture1 = analogRead(soilSensor1);
@@ -75,14 +78,15 @@ void loop() {
 
   delay(5000);
 
-//  if(temp > 28 || hum > 95)
+//  if(hum > 80.00)
 //  {
-//    //Kör fläkt
-//    Serial.println("Temperatur för hög. Startar fläkt. Nuvarande temperatur: " + String(temp));
-//    
-//    delay(60000);
-//    
+//    Serial.println("Fuktigheten är för hög. Startar fläkt. Fuktigheten är: " + String(hum));
+//    digitalWrite(fanPin, HIGH);
+//    delay(30000);
+//    digitalWrite(fanPin, LOW);    
 //  }
+
+/////////////////////////
   
   if (moisture1 >= dry) {
     
