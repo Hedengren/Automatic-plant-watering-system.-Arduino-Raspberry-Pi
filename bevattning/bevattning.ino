@@ -16,6 +16,7 @@ const int soilSensor3 = A2;
 const int soilSensor4 = A3;
 
 
+//#include <LiquidCrystal.h> // To be implemented.. LCD
 #include <DHT.h>
 #define DHTPIN 7 //Kan ändras...
 #define DHTPIN2 13
@@ -31,11 +32,17 @@ int chk2;
 float hum2; 
 float temp2; 
 
-
+/* To be implemented.. LCD. Pins will need to altered. 
+const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+*/ 
 
 void setup() {
 
   Serial.begin(9600);
+  
+  // lcd.begin(16, 2); // Setup for the LCD-display 
+  
   dht.begin();
   dht2.begin();
   pinMode(pumpPin1, OUTPUT);
@@ -72,7 +79,8 @@ void loop() {
     Serial.print(" %, Temperatur: ");
     Serial.print(temp);
     Serial.println(" °C");  
-
+  
+ 
   // hämta värden
   int moisture1 = analogRead(soilSensor1);
   int moisture2 = analogRead(soilSensor2);
@@ -179,7 +187,51 @@ void loop() {
 
   
 ///////////////////////
-
-
-   delay(33333333);//Vänta med att köra loopen..
+    delay(150000);
 }
+
+void displayTempHumStart()
+{
+    hum = dht.readHumidity();
+    temp = dht.readTemperature();
+    lcd.setCursor(0,0);
+    lcd.print("AirHum: "+hum);
+    lcd.setCursor(0,1);
+    lcd.print("Temp: "+temp);
+    delay(6000);
+    lcd.clear();
+}
+
+void displayTempHumEnd()
+{
+    hum = dht.readHumidity();
+    temp = dht.readTemperature();
+    lcd.setCursor(0,0);
+    lcd.print("AirHum: "+hum);
+    lcd.setCursor(0,1);
+    lcd.print("Temp: "+temp);
+    delay(6000);
+    lcd.clear();
+}
+
+
+
+////////////////////////////////////////////////////////////////////////// Trying to make the code more efficient below. Not to be implemented yet.. 
+
+/*
+
+
+
+void displayWatering(int moistIncoming, int pumpPinIncoming)
+{
+  if(moistIncoming >= dry)
+  {
+    
+  }
+  
+}
+
+
+
+*/
+  
