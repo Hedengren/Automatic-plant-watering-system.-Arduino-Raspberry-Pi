@@ -118,6 +118,14 @@ void loop() {
 
 /////////////////////////
   
+  
+  checkMoistureIfWaterNeeded(moisture1, pumpPin1);
+  checkMoistureIfWaterNeeded(moisture2, pumpPin2); 
+  checkMoistureIfWaterNeeded(moisture3, pumpPin3);
+  checkMoistureIfWaterNeeded(moisture4, pumpPin4);
+  
+  
+  
   if (moisture1 >= dry) {
     
     Serial.println("Startar bevattning..fuktigheten är: " + String(moisture1));
@@ -187,7 +195,8 @@ void loop() {
 
   
 ///////////////////////
-    delay(150000);
+  displayTempHumEnd();  
+  delay(150000);
 }
 
 void displayTempHumStart()
@@ -210,8 +219,7 @@ void displayTempHumEnd()
     lcd.print("AirHum: "+hum);
     lcd.setCursor(0,1);
     lcd.print("Temp: "+temp);
-    delay(6000);
-    lcd.clear();
+    
 }
 
 
@@ -222,11 +230,20 @@ void displayTempHumEnd()
 
 
 
-void displayWatering(int moistIncoming, int pumpPinIncoming)
+void checkMoistureIfWaterNeeded(int moistIncoming, int pumpPinIncoming)
 {
   if(moistIncoming >= dry)
   {
-    
+    lcd.print("Watering.. " + String(moistIncoming));
+    digitalWrite(pumpPinIncoming, LOW);
+    delay(5000);   
+    digitalWrite(pumpPinIncoming, HIGH); 
+    lcd.clear();
+  }
+  else
+  {
+    lcd.print("Water not needed " + String(moistIncoming));
+    delay(5000);
   }
   
 }
