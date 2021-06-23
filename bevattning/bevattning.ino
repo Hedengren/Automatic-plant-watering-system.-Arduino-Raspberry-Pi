@@ -32,7 +32,7 @@ int chk2;
 float hum2; 
 float temp2; 
 
-/* To be implemented.. LCD. Pins will need to altered. 
+/* To be implemented.. LCD. Pins will need to be altered. 
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 */ 
@@ -68,8 +68,6 @@ void setup() {
 }
 
 void loop() {
-
- 
   
   hum = dht.readHumidity();
   temp = dht.readTemperature();
@@ -81,7 +79,7 @@ void loop() {
     Serial.println(" °C");  
   
  
-  // hämta värden
+  // Fetch moisture values.
   int moisture1 = analogRead(soilSensor1);
   int moisture2 = analogRead(soilSensor2);
   int moisture3 = analogRead(soilSensor3);
@@ -116,87 +114,35 @@ void loop() {
 //    digitalWrite(fanPin, LOW);    
 //  }
 
-/////////////////////////
-  
-  
   checkMoistureIfWaterNeeded(moisture1, pumpPin1);
   checkMoistureIfWaterNeeded(moisture2, pumpPin2); 
   checkMoistureIfWaterNeeded(moisture3, pumpPin3);
-  checkMoistureIfWaterNeeded(moisture4, pumpPin4);
-  
-  
-  
-  if (moisture1 >= dry) {
-    
-    Serial.println("Startar bevattning..fuktigheten är: " + String(moisture1));
-    digitalWrite(pumpPin1, LOW);
-
-    // kör pump i fem sekunder
-    delay(2500);
-
-    // avsluta bevattningen 
-    digitalWrite(pumpPin1, HIGH);
-    Serial.println("Bevattning klar.");
-  } else {
-    Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture1));
-    delay(2500);
-  }
-  
-/////////////////////////
-
-  if (moisture2 >= dry) {
-    // the soil is too dry, water!
-    Serial.println("Startar bevattning..fuktigheten är: " + String(moisture2));
-    digitalWrite(pumpPin2, LOW);
-
-    // kör pump i fem sekunder
-    delay(2500);
-
-    // avsluta bevattningen 
-    digitalWrite(pumpPin2, HIGH);
-    Serial.println("Bevattning klar.");
-  } else {
-    Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture2));
-  }
-  
-/////////////////////////
-
-  if (moisture3 >= dry) {
-    // the soil is too dry, water!
-    Serial.println("Startar bevattning..fuktigheten är: " + String(moisture3));
-    digitalWrite(pumpPin3, LOW);
-
-    // kör pump i fem sekunder
-    delay(2500);
-
-    // avsluta bevattningen 
-    digitalWrite(pumpPin3, HIGH);
-    Serial.println("Bevattning klar.");
-  } else {
-    Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture3));
-  }
-  
-/////////////////////////
-
-//  if (moisture4 >= dry) {
-//    // the soil is too dry, water!
-//    Serial.println("Startar bevattning..fuktigheten är: " + String(moisture4));
-//    digitalWrite(pumpPin4, LOW);
-//
-//    // kör pump i fem sekunder
-//    delay(5000);
-//
-//    // avsluta bevattningen 
-//    digitalWrite(pumpPin4, HIGH);
-//    Serial.println("Bevattning klar.");
-//  } else {
-//    Serial.println("Jorden är fuktig. Bevattning krävs ej " + String(moisture4));
-//  }
-
+  // checkMoistureIfWaterNeeded(moisture4, pumpPin4); 
   
 ///////////////////////
   displayTempHumEnd();  
   delay(150000);
+}
+
+
+
+void checkMoistureIfWaterNeeded(int moistIncoming, int pumpPinIncoming)
+{
+  if(moistIncoming >= dry)
+  {
+    lcd.print("Watering.. " + String(moistIncoming));
+    digitalWrite(pumpPinIncoming, LOW);
+    delay(2500);   
+    digitalWrite(pumpPinIncoming, HIGH); 
+    lcd.clear();
+  }
+  else
+  {
+    lcd.print("Water not needed " + String(moistIncoming));
+    delay(2500);
+    lcd.clear()
+  }
+   
 }
 
 void displayTempHumStart()
@@ -222,33 +168,9 @@ void displayTempHumEnd()
     
 }
 
-
-
-////////////////////////////////////////////////////////////////////////// Trying to make the code more efficient below. Not to be implemented yet.. 
-
-/*
-
-
-
-void checkMoistureIfWaterNeeded(int moistIncoming, int pumpPinIncoming)
-{
-  if(moistIncoming >= dry)
-  {
-    lcd.print("Watering.. " + String(moistIncoming));
-    digitalWrite(pumpPinIncoming, LOW);
-    delay(5000);   
-    digitalWrite(pumpPinIncoming, HIGH); 
-    lcd.clear();
-  }
-  else
-  {
-    lcd.print("Water not needed " + String(moistIncoming));
-    delay(5000);
-  }
-  
 }
 
 
 
-*/
+
   
