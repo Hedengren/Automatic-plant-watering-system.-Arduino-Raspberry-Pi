@@ -128,9 +128,7 @@ void loop() {
   
   // checkMoistureIfWaterNeeded(moisture4, pumpPin4); 
   
-  displayTempHumEnd();
-  
-  delay(150000);
+  displayTempHumEnd(); 
   
 }
 
@@ -169,12 +167,20 @@ void displayTempHumStart()
 
 void displayTempHumEnd()
 {
+  unsigned long currentTime = millis();
+  constant unsigned long timeSpan = 25000;
+  
+  while(currentTime < currentTime+timeSpan)
+  {
+    Serial.println(currentTime);
     hum = dht.readHumidity();
     temp = dht.readTemperature();
     lcd.setCursor(0,0);
     lcd.print("AirHum: "+hum);
     lcd.setCursor(0,1);
     lcd.print("Temp: "+temp);
+    delay(5000);
+  }
     
 }
 
