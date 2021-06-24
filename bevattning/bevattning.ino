@@ -98,7 +98,6 @@ void loop() {
 
   delay(5000);
 
-  //////////////////////////////
 
 /*  
   // Second humidity and temperature sensor, not in use.
@@ -122,13 +121,17 @@ void loop() {
 //  }
 
   checkMoistureIfWaterNeeded(moisture1, pumpPin1);
-  checkMoistureIfWaterNeeded(moisture2, pumpPin2); 
+  
+  checkMoistureIfWaterNeeded(moisture2, pumpPin2);
+  
   checkMoistureIfWaterNeeded(moisture3, pumpPin3);
+  
   // checkMoistureIfWaterNeeded(moisture4, pumpPin4); 
   
-///////////////////////
-  displayTempHumEnd();  
+  displayTempHumEnd();
+  
   delay(150000);
+  
 }
 
 
