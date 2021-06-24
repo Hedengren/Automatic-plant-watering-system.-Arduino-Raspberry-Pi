@@ -1,5 +1,7 @@
 
+// Fixed value for when the soil is "dry".  
 const int dry = 320; 
+
 
 const int pumpPin1 = 2;
 const int pumpPin2 = 4;
@@ -16,7 +18,7 @@ const int soilSensor3 = A2;
 const int soilSensor4 = A3;
 
 
-//#include <LiquidCrystal.h> // To be implemented.. LCD
+//#include <LiquidCrystal.h> // To be implemented.. LCD-display.
 #include <DHT.h>
 #define DHTPIN 7 //Kan ändras...
 #define DHTPIN2 13
@@ -78,6 +80,8 @@ void loop() {
     Serial.print(temp);
     Serial.println(" °C");  
   
+  displayTempHumStart(); // Sends temperature and humidity values to display.
+  
  
   // Fetch moisture values.
   int moisture1 = analogRead(soilSensor1);
@@ -96,6 +100,8 @@ void loop() {
 
   //////////////////////////////
 
+/*  
+  // Second humidity and temperature sensor, not in use.
   hum2 = dht2.readHumidity();
   temp2 = dht2.readTemperature();
   
@@ -104,6 +110,7 @@ void loop() {
     Serial.print(" %, Temperatur: ");
     Serial.print(temp2);
     Serial.println(" °C");  
+ */
   
 
 //  if(hum > 80.00)
