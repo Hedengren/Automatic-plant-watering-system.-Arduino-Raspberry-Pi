@@ -1,4 +1,3 @@
-
 // Fixed value for when the soil is "dry".  
 const int dry = 320; 
 
@@ -138,17 +137,19 @@ void checkMoistureIfWaterNeeded(int moistIncoming, int pumpPinIncoming)
 {
   if(moistIncoming >= dry)
   {
-    lcd.print("Watering.. " + String(moistIncoming));
+//    lcd.print("Watering.. " + String(moistIncoming));
+    Serial.print("Watering.." + moistIncoming);
     digitalWrite(pumpPinIncoming, LOW);
     delay(2500);   
     digitalWrite(pumpPinIncoming, HIGH); 
-    lcd.clear();
+//    lcd.clear();
   }
   else
   {
-    lcd.print("Water not needed " + String(moistIncoming));
+//    lcd.print("Water not needed " + String(moistIncoming));
+    Serial.print("Water not needed" + String(moistIncoming));
     delay(2500);
-    lcd.clear()
+//    lcd.clear()
   }
    
 }
@@ -157,36 +158,34 @@ void displayTempHumStart()
 {
     hum = dht.readHumidity();
     temp = dht.readTemperature();
-    lcd.setCursor(0,0);
-    lcd.print("AirHum: "+hum);
-    lcd.setCursor(0,1);
-    lcd.print("Temp: "+temp);
+//    lcd.setCursor(0,0);
+//    lcd.print("AirHum: "+hum);
+//    lcd.setCursor(0,1);
+//    lcd.print("Temp: "+temp);
     delay(6000);
-    lcd.clear();
+//    lcd.clear();
 }
 
 void displayTempHumEnd()
 {
   unsigned long currentTime = millis();
-  constant unsigned long timeSpan = 25000;
+  const unsigned long timeSpan = 250000;
+  const unsigned long eventTime = currentTime + timeSpan;
   
-  while(currentTime < currentTime+timeSpan)
+  
+  while(currentTime < eventTime)
   {
     Serial.println(currentTime);
+//    Serial.println(eventTime);
     hum = dht.readHumidity();
     temp = dht.readTemperature();
-    lcd.setCursor(0,0);
-    lcd.print("AirHum: "+hum);
-    lcd.setCursor(0,1);
-    lcd.print("Temp: "+temp);
+//    lcd.setCursor(0,0);
+//    lcd.print("AirHum: "+hum);
+//    lcd.setCursor(0,1);
+//    lcd.print("Temp: "+temp);
     delay(5000);
+    currentTime = millis();
   }
     
 }
 
-}
-
-
-
-
-  
